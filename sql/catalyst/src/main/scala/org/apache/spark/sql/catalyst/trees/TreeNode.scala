@@ -255,6 +255,8 @@ abstract class TreeNode[BaseType <: TreeNode[BaseType]] extends Product {
    * @param rule the function used to transform this nodes children
    */
   def transformDown(rule: PartialFunction[BaseType, BaseType]): BaseType = {
+    // *******先用rule去处理本节点，再用transformDown去处理本节点的所有孩子*******
+    // **********
     val afterRule = CurrentOrigin.withOrigin(origin) {
       rule.applyOrElse(this, identity[BaseType])
     }
@@ -275,6 +277,8 @@ abstract class TreeNode[BaseType <: TreeNode[BaseType]] extends Product {
   protected def transformChildren(
       rule: PartialFunction[BaseType, BaseType],
       nextOperation: (BaseType, PartialFunction[BaseType, BaseType]) => BaseType): BaseType = {
+    // **** 用nextOperation函数去处理该节点的所有孩子，并返回处理完后的新的树******
+    // ********
     var changed = false
     val newArgs = productIterator.map {
       case arg: TreeNode[_] if containsChild(arg) =>
@@ -329,6 +333,8 @@ abstract class TreeNode[BaseType <: TreeNode[BaseType]] extends Product {
    * @param rule the function use to transform this nodes children
    */
   def transformUp(rule: PartialFunction[BaseType, BaseType]): BaseType = {
+    // *******递归调用：先用transformUp去处理本节点的所有孩子, 再用rule去处理本节点*******
+    // **********
     val afterRuleOnChildren = transformChildren(rule, (t, r) => t.transformUp(r))
     if (this fastEquals afterRuleOnChildren) {
       CurrentOrigin.withOrigin(origin) {
