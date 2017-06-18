@@ -103,7 +103,7 @@ abstract class TreeNode[BaseType <: TreeNode[BaseType]] extends Product {
     case false => children.foldLeft(None: Option[BaseType]) { (l, r) => l.orElse(r.find(f)) }
   }
 
-  /**
+  /** pre-order to use function f in the tree
    * Runs the given function on this node and then recursively on [[children]].
    * @param f the function to be applied to each node in the tree.
    */
@@ -112,7 +112,7 @@ abstract class TreeNode[BaseType <: TreeNode[BaseType]] extends Product {
     children.foreach(_.foreach(f))
   }
 
-  /**
+  /** post-order to use function f in the tree
    * Runs the given function recursively on [[children]] then on this node.
    * @param f the function to be applied to each node in the tree.
    */
@@ -123,7 +123,7 @@ abstract class TreeNode[BaseType <: TreeNode[BaseType]] extends Product {
 
   /**
    * Returns a Seq containing the result of applying the given function to each
-   * node in this tree in a preorder traversal.
+   * node in this tree in a pre-order traversal.
    * @param f the function to be applied.
    */
   def map[A](f: BaseType => A): Seq[A] = {
