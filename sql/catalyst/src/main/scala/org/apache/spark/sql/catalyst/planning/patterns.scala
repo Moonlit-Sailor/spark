@@ -34,6 +34,8 @@ object PhysicalOperation extends PredicateHelper {
   type ReturnType = (Seq[NamedExpression], Seq[Expression], LogicalPlan)
 
   def unapply(plan: LogicalPlan): Option[ReturnType] = {
+    // *******将一个LogicalPlan拆分成projectList，filters和Relation******
+    // ***********
     val (fields, filters, child, _) = collectProjectsAndFilters(plan)
     Some((fields.getOrElse(child.output), filters, child))
   }

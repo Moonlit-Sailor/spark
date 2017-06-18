@@ -30,7 +30,7 @@ import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
  * changing them, because a lot of developers use the feature for debugging.
  */
 class QueryExecution(val sqlContext: SQLContext, val logical: LogicalPlan) {
-
+  // 处理一个sql语句从SQLParser处理之后到执行的全部过程。即：Analyze，Optimize，LogicalPlan转化为物理计划，物理计划的执行
   def assertAnalyzed(): Unit = sqlContext.analyzer.checkAnalysis(analyzed)
 
   lazy val analyzed: LogicalPlan = sqlContext.analyzer.execute(logical)

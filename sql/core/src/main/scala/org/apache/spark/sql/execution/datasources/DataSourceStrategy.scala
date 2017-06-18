@@ -118,7 +118,7 @@ private[sql] object DataSourceStrategy extends Strategy with Logging {
       ).getOrElse(scan) :: Nil
 
     // Scanning non-partitioned HadoopFsRelation
-    case PhysicalOperation(projects, filters, l @ LogicalRelation(t: HadoopFsRelation, _)) =>
+    case PhysicalOperation(projects, filters, l @ LogicalRelation(t: HadoopFsRelation, _)) => // 调用PhysicalOperation的unapply方法
       // See buildPartitionedTableScan for the reason that we need to create a shard
       // broadcast HadoopConf.
       val sharedHadoopConf = SparkHadoopUtil.get.conf
