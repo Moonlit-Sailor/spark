@@ -307,6 +307,7 @@ class Analyzer(
     }
 
     def apply(plan: LogicalPlan): LogicalPlan = plan resolveOperators {
+      // *******后序遍历该LogicalPlan的所有节点, 若有节点是UnresolvedRelation,则查表并替换为ResolvedRelation
       case i @ InsertIntoTable(u: UnresolvedRelation, _, _, _, _) =>
         i.copy(table = EliminateSubQueries(getTable(u)))
       case u: UnresolvedRelation =>
