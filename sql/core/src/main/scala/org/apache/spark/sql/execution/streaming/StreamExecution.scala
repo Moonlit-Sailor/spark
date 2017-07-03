@@ -148,6 +148,7 @@ class StreamExecution(
         // "df.logicalPlan" has already used attributes of the previous `output`.
         StreamingExecutionRelation(source, output)
     }
+    // collect all of sources that StreamingExecutionRelation owns
     sources = _logicalPlan.collect { case s: StreamingExecutionRelation => s.source }
     uniqueSources = sources.distinct
     _logicalPlan
@@ -394,6 +395,7 @@ class StreamExecution(
    * Returns true if there is any new data available to be processed.
    */
   private def dataAvailable: Boolean = {
+    // check if availableOffsets has offset data that committedOffsets does not have
     availableOffsets.exists {
       case (source, available) =>
         committedOffsets
