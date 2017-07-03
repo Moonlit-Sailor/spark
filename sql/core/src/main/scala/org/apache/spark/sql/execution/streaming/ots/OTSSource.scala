@@ -18,11 +18,12 @@
 package org.apache.spark.sql.execution.streaming.ots
 
 import com.alicloud.openservices.tablestore.SyncClient
+
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.execution.streaming.{Offset, Source}
 
 
-//class OTSSource(sourceOptions: Map[String, String]) extends Source{
+//class OTSSource(schema: StructType, sourceOptions: Map[String, String]) extends Source{
 //  var client: SyncClient = _
 //  initialize()
 //  private def initialize(): Unit = {

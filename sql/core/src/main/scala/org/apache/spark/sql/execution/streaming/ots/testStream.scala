@@ -49,7 +49,7 @@ object testStream {
         val streamRecordRequest = new GetStreamRecordRequest(sIter)
         // scalastyle:off
         println(streamRecordRequest.getLimit)
-        streamRecordRequest.setLimit(7)
+        streamRecordRequest.setLimit(Int.MaxValue)
         println(streamRecordRequest.getLimit)
         val streamRecordResponse = client.getStreamRecord(streamRecordRequest)
         println("next Iter:" + streamRecordResponse.getNextShardIterator)
@@ -75,7 +75,8 @@ object testStream {
 
         println("records2 size:" + records2.size)
         records2.foreach(println)
-
+        val cols = records(0).getColumns.asScala
+        cols(0).getColumnType
         // scalastyle:on
 
       }

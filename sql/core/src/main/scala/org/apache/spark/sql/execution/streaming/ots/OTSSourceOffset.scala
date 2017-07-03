@@ -17,9 +17,16 @@
 
 package org.apache.spark.sql.execution.streaming.ots
 
+import scala.collection.mutable.ListBuffer
+
+import com.alicloud.openservices.tablestore.model.StreamShard
+
 import org.apache.spark.sql.execution.streaming.Offset
 
 
-private[ots] case class OTSSourceOffset(shardIterator: String) extends Offset{
-  override val json: String = shardIterator
-}
+
+private[ots] case class OTSStreamShards(streamId: String, shards: ListBuffer[StreamShard])
+
+//private[ots] case class OTSSourceOffset(shardIterator: Map[OTSStreamShards, String]) extends Offset{
+//  override val json: String = shardIterator
+//}
