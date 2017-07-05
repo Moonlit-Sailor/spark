@@ -25,8 +25,8 @@ import org.apache.spark.sql.execution.streaming.Offset
 
 
 
-private[ots] case class OTSStreamShards(streamId: String, shards: ListBuffer[StreamShard])
+private[ots] case class OTSStreamShard(streamId: String, shard: StreamShard)
 
-//private[ots] case class OTSSourceOffset(shardIterator: Map[OTSStreamShards, String]) extends Offset{
+//private[ots] case class OTSSourceOffset(shardToOffset: Map[OTSStreamShard, String]) extends Offset{
 //  override val json: String = shardIterator
 //}

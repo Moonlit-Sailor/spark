@@ -70,6 +70,7 @@ object testStream {
         streamRecordRequest2.setLimit(7)
         println(streamRecordRequest2.getLimit)
         val streamRecordResponse2 = client.getStreamRecord(streamRecordRequest2)
+        println("curr Iter:"+ nextIter)
         println("next Iter:" + streamRecordResponse2.getNextShardIterator)
         val records2 = streamRecordResponse2.getRecords.asScala
 
