@@ -218,6 +218,8 @@ public class VectorizedParquetRecordReader extends SpecificParquetRecordReaderBa
 
   /**
    * Advances to the next batch of rows. Returns false if there are no more.
+   * read next batch of rows,
+   * the fetched number of rows is Min(columnarBatch Capacity, the next row group's row count)
    */
   public boolean nextBatch() throws IOException {
     columnarBatch.reset();
@@ -265,6 +267,8 @@ public class VectorizedParquetRecordReader extends SpecificParquetRecordReaderBa
     }
   }
 
+  // read next row group and initialize column reader for each column,
+  // get total row count of this row group
   private void checkEndOfRowGroup() throws IOException {
     if (rowsReturned != totalCountLoadedSoFar) return;
     PageReadStore pages = reader.readNextRowGroup();

@@ -356,7 +356,9 @@ case class FileSourceScanExec(
     val columnVectorClz = "org.apache.spark.sql.execution.vectorized.ColumnVector"
     val idx = ctx.freshName("batchIdx")
     ctx.addMutableState("int", idx, s"$idx = 0;")
+    // column vector's name
     val colVars = output.indices.map(i => ctx.freshName("colInstance" + i))
+    // initialize each column vector
     val columnAssigns = colVars.zipWithIndex.map { case (name, i) =>
       ctx.addMutableState(columnVectorClz, name, s"$name = null;")
       s"$name = $batch.column($i);"

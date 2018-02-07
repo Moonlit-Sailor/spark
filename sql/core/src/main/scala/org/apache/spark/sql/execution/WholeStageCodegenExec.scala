@@ -129,6 +129,7 @@ trait CodegenSupport extends SparkPlan {
         val colExprs = output.zipWithIndex.map { case (attr, i) =>
           BoundReference(i, attr.dataType, attr.nullable)
         }
+        // get the code of outputVars
         val evaluateInputs = evaluateVariables(outputVars)
         // generate the code to create a UnsafeRow
         ctx.INPUT_ROW = row
